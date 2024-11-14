@@ -1,10 +1,12 @@
 #![doc = include_str!("../README.md")]
 
 pub use app_router::router;
+use config::Config;
 pub use config::CONFIG;
 pub use controller::db_utils::{clear_invalid, get_one, ivec_to_u32, set_one, u8_slice_to_u32};
 pub use controller::{feed::cron_feed, tantivy::Tan};
 pub use error::AppError;
+pub use proof::Semaphore;
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 mod app_router;
@@ -60,4 +62,14 @@ pub static DB: LazyLock<Db> = LazyLock::new(|| {
     let db = config.open().unwrap();
     info!(%db_url);
     db
+});
+
+pub static SEMAPHORE: LazyLock<Semaphore> = LazyLock::new(|| {
+    let Config { rpc_url, semaphore_contract_address, .. } = *CONFIG;
+
+    info!("rpc url: {}", rpc_url);
+    info!("semaphore contract address: {}", semaphore_contract_address);
+
+    let semaphore = Semaphore::new();
+    semaphore
 });

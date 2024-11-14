@@ -55,4 +55,6 @@ pub enum AppError {
     Reqwest(#[from] reqwest::Error),
     #[error("{0}")]
     Custom(String),
+    #[error("Invalid proof")]
+    InvalidProof,
 }

@@ -25,7 +25,7 @@ use super::{
     user::{InnRole, Role},
     Claim, Comment, Feed, FormPost, Inn, InnType, Post, PostContent, PostStatus, SiteConfig, User,
 };
-use crate::{controller::filters, error::AppError, DB};
+use crate::{controller::filters, error::AppError, DB, SEMAPHORE};
 
 use axum::{
     extract::{Path, Query},
@@ -666,6 +666,18 @@ pub(crate) async fn edit_post_post(
         let re = regex::Regex::new(spam_regex).unwrap();
         if re.is_match(&input.title) || re.is_match(&input.content) || re.is_match(&input.tags) {
             return Err(AppError::Custom("Spam detected".into()));
+        }
+    }
+
+    // TODO Evaluate if it needs to be further down in validation checks
+    let proof = input.proof.unwrap_or_default();
+    // TODO is this the correct check? May need further validation of proof fields
+    if proof.len() == 0 {
+        // TODO Is an inclusion proof required for all posts, or should it be a setting on the Inn?
+    } else {
+        // TODO Add group id to input
+        if !SEMAPHORE.verify(42, proof) {
+            return Err(AppError::InvalidProof);
         }
     }
 

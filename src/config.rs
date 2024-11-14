@@ -17,6 +17,8 @@ pub struct Config {
     pub(crate) upload_path: String,
     pub(crate) tantivy_path: String,
     pub(crate) proxy: String,
+    pub rpc_url: String,
+    pub semaphore_contract_address: String,
 }
 
 impl Config {
@@ -56,6 +58,9 @@ impl Default for Config {
             upload_path: "static/imgs/upload".into(),
             tantivy_path: "tantivy".into(),
             proxy: "".into(),
+            // https://docs.semaphore.pse.dev/deployed-contracts
+            rpc_url: "https://arb1.arbitrum.io/rpc".into(),
+            semaphore_contract_address: "1e0d7FF1610e480fC93BdEC510811ea2Ba6d7c2f".into(),
         }
     }
 }

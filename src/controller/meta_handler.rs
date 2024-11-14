@@ -40,7 +40,8 @@ impl IntoResponse for AppError {
             AppError::NotFound => StatusCode::NOT_FOUND,
             AppError::WriteInterval => StatusCode::TOO_MANY_REQUESTS,
             AppError::NonLogin => return Redirect::to("/signin").into_response(),
-            AppError::Unauthorized => StatusCode::UNAUTHORIZED,
+            AppError::Unauthorized
+            | AppError::InvalidProof => StatusCode::UNAUTHORIZED,
             AppError::Banned => StatusCode::FORBIDDEN,
             _ => StatusCode::INTERNAL_SERVER_ERROR,
         };
