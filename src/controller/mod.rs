@@ -123,6 +123,7 @@ pub(super) mod tantivy;
 pub(super) mod admin;
 pub(super) mod inn;
 pub(super) mod message;
+pub(super) mod semaphore;
 pub(super) mod solo;
 pub(super) mod upload;
 pub(super) mod user;
@@ -398,6 +399,9 @@ pub(super) struct FormPost {
     is_draft: Option<bool>,
     #[garde(skip)]
     delete_draft: Option<bool>,
+    // TODO Should this have a len check?
+    #[garde(skip)]
+    proof: Option<String>, // TODO Use proof/serialized proof type here
 }
 
 #[derive(Encode, Decode, Serialize, Debug)]
