@@ -2,7 +2,7 @@
 
 Contract ABIs
 
-TODO Is there a way we can pull directly from a published npm package or git source instead of copy/pasta'ing? Ideas:
+TODO Do we want pull directly from a published npm package or git source instead of copy/pasta'ing? Ideas:
 - Submodule
 - HTTP GET from Rust code
 - Script to update

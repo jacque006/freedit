@@ -1801,6 +1801,7 @@ dependencies = [
  "rss",
  "rust-stemmers",
  "serde",
+ "serde_json",
  "sled",
  "snailquote",
  "stop-words",

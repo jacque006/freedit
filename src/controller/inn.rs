@@ -669,17 +669,18 @@ pub(crate) async fn edit_post_post(
         }
     }
 
-    // TODO Evaluate if it needs to be further down in validation checks
-    let proof = input.proof.unwrap_or_default();
-    // TODO is this the correct check? May need further validation of proof fields
-    if proof.len() == 0 {
-        // TODO Is an inclusion proof required for all posts, or should it be a setting on the Inn?
-    } else {
-        // TODO Add group id to input
-        if !SEMAPHORE.verify(42, proof) {
-            return Err(AppError::InvalidProof);
-        }
-    }
+    // // TODO Evaluate if it needs to be further down in validation checks
+    // let proof = input.proof.unwrap_or_default();
+    // // TODO is this the correct check? May need further validation of proof fields
+    // if proof.len() == 0 {
+    //     // TODO Is an inclusion proof required for all posts, or should it be a setting on the Inn?
+    // } else {
+    //     // TODO Add group id to input
+    //     // TODO Move here, Semapore may need to implment Clone (or be heaped?)
+    //     if !SEMAPHORE.verify(/*group_id, proof*/).await {
+    //         return Err(AppError::InvalidProof);
+    //     }
+    // }
 
     if delete_draft {
         DB.open_tree("drafts")?.remove(&k)?;
