@@ -3,6 +3,7 @@
 pub use app_router::router;
 pub use config::CONFIG;
 pub use controller::db_utils::{clear_invalid, get_one, ivec_to_u32, set_one, u8_slice_to_u32};
+pub use controller::semaphore::Semaphore;
 pub use controller::{feed::cron_feed, tantivy::Tan};
 pub use error::AppError;
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
@@ -60,4 +61,16 @@ pub static DB: LazyLock<Db> = LazyLock::new(|| {
     let db = config.open().unwrap();
     info!(%db_url);
     db
+});
+
+pub static SEMAPHORE: LazyLock<Semaphore> = LazyLock::new(|| {
+    info!("rpc url: {}", CONFIG.rpc_url);
+    info!("semaphore contract address: {}", CONFIG.semaphore_contract_address);
+
+    let semaphore = Semaphore::new(
+        CONFIG.rpc_url.clone(),
+        CONFIG.chain_id,
+        CONFIG.semaphore_contract_address.clone()
+    );
+    semaphore.unwrap()
 });
