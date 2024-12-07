@@ -22,6 +22,7 @@ pub struct SemaphoreProof {
     points: [U256; 8],
 }
 
+// TODO Add ability to CRUD onchain group.
 impl Semaphore {
     // TODO We can get chain_id from provider (get_chain_id), but that will make this async
     // which does not play nicely with LazyLock used for globals in src/lib.rs.
@@ -45,6 +46,12 @@ impl Semaphore {
     // TODO Implement
     // TODO Return type should be a Result since rpc call could fail
     pub async fn verify(self/*, group_id: U256, p: SemaphoreProof*/) -> bool {
+        /* TODO As part of this verification check, we need to:
+            - Store the nullifier in the sled db and make sure it is not used twice.
+              This might be better done out side this controller to avoid the db dep (separation of concerns)
+            - Make sure the merkle root is latest and creation timestamp + fingerprint duration is greater than the current time
+        */
+
         // let valid_value = self.contract.function("verifyProof", &[group_id, p])?.call().await;
         // let valid = valid_value.first().unwrap().as_bool().unwrap().0;
         // valid

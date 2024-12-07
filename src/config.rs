@@ -17,8 +17,11 @@ pub struct Config {
     pub(crate) upload_path: String,
     pub(crate) tantivy_path: String,
     pub(crate) proxy: String,
+    // EVM chain
     pub rpc_url: String,
     pub chain_id: u64,
+    // Semaphore
+    pub group_id: u64, // TODO Add this to the inn db level
     pub semaphore_contract_address: String,
 }
 
@@ -59,8 +62,11 @@ impl Default for Config {
             upload_path: "static/imgs/upload".into(),
             tantivy_path: "tantivy".into(),
             proxy: "".into(),
+            // https://chainlist.org/chain/42161
+            // Any EVM network Semaphore is dpeloyed on should work here
             rpc_url: "https://arb1.arbitrum.io/rpc".into(),
             chain_id: 42161,
+            group_id: 42,
             // https://docs.semaphore.pse.dev/deployed-contracts
             semaphore_contract_address: "1e0d7FF1610e480fC93BdEC510811ea2Ba6d7c2f".into(),
         }

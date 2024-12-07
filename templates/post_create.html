@@ -1,6 +1,12 @@
 {% extends "layout.html" %}
 
-<!-- TODO Add inclusion proof generation in this page -->
+<!-- TODO Remove this block by proxying JS bundle through freedit server -->
+{% block csp %}
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self';
+    img-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' localhost:5173
+    style-src 'self'; object-src 'none';
+    font-src 'none'; form-action 'self'; frame-src 'none'; media-src 'none'; manifest-src 'none'; worker-src 'none';">
+{% endblock %}
 
 {% block content %}
 <article class="media box">
@@ -72,6 +78,11 @@
     </div>
 </article>
 <div class="divider"></div>
+{% endblock %}
+
+<!-- TODO Proxy JS bundle through freedit server -->
+{% block extra %}
+    <script type="module" src="http://localhost:5173/src/freedit.ts"></script>
 {% endblock %}
 
 {% block aside %}
